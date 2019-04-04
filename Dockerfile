@@ -66,6 +66,10 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
  && fakechroot fakeroot chroot $CHROOT_DIR \
      /bin/sh -c 'echo "deb http://cran.rstudio.com/bin/linux/ubuntu bionic/" >> /etc/apt/sources.list' \
 
+ # install gpg
+ && fakechroot fakeroot chroot $CHROOT_DIR \
+     apt-get -qy install gnupg gpg \
+
  # postgres key
  && fakechroot fakeroot chroot $CHROOT_DIR \
      gpg --keyserver keyserver.ubuntu.com --recv-key ACCC4CF8 \
