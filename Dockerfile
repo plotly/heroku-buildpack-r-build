@@ -19,6 +19,7 @@ RUN apt-get -q update \
       autogen \
       autoconf \
       libtool \
+      systemd \
       debootstrap
 
 # "install" fakeroot (since it's not included in heroku-18 base at runtime anymore)
