@@ -64,8 +64,11 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
  && fakechroot fakeroot chroot $CHROOT_DIR \
      /bin/sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" >> /etc/apt/sources.list' \
 
+ # && fakechroot fakeroot chroot $CHROOT_DIR \
+ #    /bin/sh -c 'echo "deb http://cran.rstudio.com/bin/linux/ubuntu bionic/" >> /etc/apt/sources.list' \
+
  && fakechroot fakeroot chroot $CHROOT_DIR \
-     /bin/sh -c 'echo "deb http://cran.rstudio.com/bin/linux/ubuntu bionic/" >> /etc/apt/sources.list' \
+     /bin/sh -c 'echo "deb http://cran.rstudio.com/bin/linux/ubuntu bionic-cran35/" >> /etc/apt/sources.list' \
 
  # install gpg
  && fakechroot fakeroot chroot $CHROOT_DIR \
@@ -93,7 +96,7 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
  #     gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9 \
  
  && fakechroot fakeroot chroot $CHROOT_DIR \
-     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 \
 
 # && fakechroot fakeroot chroot $CHROOT_DIR \
 #     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9 \
@@ -114,6 +117,7 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
     gfortran \
     libcairo2-dev \
     libcurl4-openssl-dev \
+    curl \
     libgsl0-dev \
     libssl-dev \
     libxml2-dev \
