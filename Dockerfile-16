@@ -90,6 +90,7 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
 RUN fakechroot fakeroot chroot $CHROOT_DIR \
   apt-get -qy install \
     build-essential \
+    curl \
     gfortran \
     libcairo2-dev \
     libcurl4-openssl-dev \
