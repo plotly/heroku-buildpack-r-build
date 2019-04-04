@@ -33,7 +33,7 @@ function topic() {
   echo "=====> $*"
 }
 
-STACK="heroku-16"
+STACK="heroku-18"
 BUILDPACK_ARCHIVE="R-$R_VERSION-binaries-$BUILD_NO.tar.gz"
 BUILDPACK_ARCHIVE_LATEST="R-$R_VERSION-binaries-latest.tar.gz"
 TAG="vsv/heroku-buildpack-r-v$R_VERSION-$STACK:$BUILD_NO"
@@ -55,8 +55,8 @@ echo "#======================================================================"
 topic 'Building image'
 
 # ensure latest heroku images
-docker pull heroku/heroku:16
-docker pull heroku/heroku:16-build
+docker pull heroku/heroku:18
+docker pull heroku/heroku:18-build
 
 # build the image
 docker build \
@@ -94,7 +94,7 @@ topic 'Optimizing archive size'
 docker run -t \
   -v $(pwd):/var/tmp \
   --rm \
-  heroku/heroku:16 \
+  heroku/heroku:18 \
   /var/tmp/create_package $R_VERSION $BUILD_NO $STACK
 
 #======================================================================
@@ -104,18 +104,18 @@ topic 'Testing archive'
 docker run -t \
   -v $(pwd):/var/tmp \
   --rm \
-  heroku/heroku:16 \
+  heroku/heroku:18 \
   /var/tmp/test_package $R_VERSION $BUILD_NO $STACK
 
 #======================================================================
 topic 'Uploading archive'
 
 # upload to S3
-aws s3 cp $BUILDPACK_ARCHIVE \
-  "s3://heroku-buildpack-r/$STACK/$BUILDPACK_ARCHIVE" \
-  --acl=public-read \
-  --profile=heroku-buildpack-r \
-  --quiet
+# aws s3 cp $BUILDPACK_ARCHIVE \
+#  "s3://heroku-buildpack-r/$STACK/$BUILDPACK_ARCHIVE" \
+#  --acl=public-read \
+#  --profile=heroku-buildpack-r \
+#  --quiet
 
 echo
 echo "After testing the build, make it current by running the following:"

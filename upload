@@ -7,7 +7,7 @@ set -e
 # set -x
 
 BUILDPACK_ARCHIVE="$1"
-STACK="${2:-heroku-16}"
+STACK="${2:-heroku-18}"
 
 # check arguments
 if ([ -z "$BUILDPACK_ARCHIVE" ] || [ -z "$STACK" ]); then

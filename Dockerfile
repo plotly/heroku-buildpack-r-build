@@ -1,4 +1,4 @@
-FROM heroku/heroku:16
+FROM heroku/heroku:18
 
 ARG R_VERSION
 ARG BUILD_NO
@@ -21,7 +21,7 @@ RUN apt-get -q update \
       libtool \
       debootstrap
 
-# "install" fakeroot (since it's not included in heroku-16 base at runtime anymore)
+# "install" fakeroot (since it's not included in heroku-18 base at runtime anymore)
 # see https://devcenter.heroku.com/articles/stack-packages
 RUN mkdir -p $FAKEROOT_DIR/bin $FAKEROOT_DIR/lib/x86_64-linux-gnu/libfakeroot \
  && cd $FAKEROOT_DIR \
@@ -40,7 +40,7 @@ RUN git clone -b "$FAKECHROOT_VER" --single-branch --depth 1 https://github.com/
  && make install
 
 # install debootstrap linux
-RUN fakechroot fakeroot debootstrap --variant=fakechroot --arch=amd64 xenial $CHROOT_DIR
+RUN fakechroot fakeroot debootstrap --variant=fakechroot --arch=amd64 bionic $CHROOT_DIR
 
 # fix up bashrc inside chroot
 ENV BASH_RC_FILE="$CHROOT_DIR/root/.bashrc"
@@ -48,19 +48,19 @@ RUN sed -i -e s/#force_color_prompt=yes/force_color_prompt=yes/ $BASH_RC_FILE
 
 # configure apt for R packages
 RUN fakechroot fakeroot chroot $CHROOT_DIR \
-     /bin/sh -c 'echo "deb http://archive.ubuntu.com/ubuntu xenial main universe" > /etc/apt/sources.list' \
+     /bin/sh -c 'echo "deb http://archive.ubuntu.com/ubuntu bionic main universe" > /etc/apt/sources.list' \
 
  && fakechroot fakeroot chroot $CHROOT_DIR \
-     /bin/sh -c 'echo "deb http://archive.ubuntu.com/ubuntu xenial-security main universe" >> /etc/apt/sources.list' \
+     /bin/sh -c 'echo "deb http://archive.ubuntu.com/ubuntu bionic-security main universe" >> /etc/apt/sources.list' \
 
  && fakechroot fakeroot chroot $CHROOT_DIR \
-     /bin/sh -c 'echo "deb http://archive.ubuntu.com/ubuntu xenial-updates main universe" >> /etc/apt/sources.list' \
+     /bin/sh -c 'echo "deb http://archive.ubuntu.com/ubuntu bionic-updates main universe" >> /etc/apt/sources.list' \
 
  && fakechroot fakeroot chroot $CHROOT_DIR \
-     /bin/sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main" >> /etc/apt/sources.list' \
+     /bin/sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" >> /etc/apt/sources.list' \
 
  && fakechroot fakeroot chroot $CHROOT_DIR \
-     /bin/sh -c 'echo "deb http://cran.rstudio.com/bin/linux/ubuntu xenial/" >> /etc/apt/sources.list' \
+     /bin/sh -c 'echo "deb http://cran.rstudio.com/bin/linux/ubuntu bionic/" >> /etc/apt/sources.list' \
 
  # postgres key
  && fakechroot fakeroot chroot $CHROOT_DIR \
@@ -103,5 +103,5 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
   /bin/sh -c 'curl -s -L https://github.com/jgm/pandoc/releases/download/1.19.2.1/pandoc-1.19.2.1-1-amd64.deb -o pandoc.deb && dpkg -i pandoc.deb && rm pandoc.deb'
 
 # install shiny (as it's the most used on Heroku)
-RUN fakechroot fakeroot chroot $CHROOT_DIR \
-  /usr/bin/R -e "install.packages('shiny', repos='http://cran.rstudio.com/')"
+# RUN fakechroot fakeroot chroot $CHROOT_DIR \
+#  /usr/bin/R -e "install.packages('shiny', repos='http://cran.rstudio.com/')"
