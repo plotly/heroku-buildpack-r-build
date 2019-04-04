@@ -19,7 +19,8 @@ RUN apt-get -q update \
       autogen \
       autoconf \
       libtool \
-      debootstrap
+      debootstrap \
+      systemd
 
 # "install" fakeroot (since it's not included in heroku-16 base at runtime anymore)
 # see https://devcenter.heroku.com/articles/stack-packages
