@@ -75,11 +75,11 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
  && fakechroot fakeroot chroot $CHROOT_DIR \
      apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7FCC7D46ACCC4CF8 \   
 
- && fakechroot fakeroot chroot $CHROOT_DIR \
-     /bin/sh -c 'gpg --export 7FCC7D46ACCC4CF8 > /var/tmp/7FCC7D46ACCC4CF8 && apt-key add /var/tmp/7FCC7D46ACCC4CF8 && rm /var/tmp/7FCC7D46ACCC4CF8' \
+ # && fakechroot fakeroot chroot $CHROOT_DIR \
+ #     /bin/sh -c 'gpg --export 7FCC7D46ACCC4CF8 > /var/tmp/7FCC7D46ACCC4CF8 && apt-key add /var/tmp/7FCC7D46ACCC4CF8 && rm /var/tmp/7FCC7D46ACCC4CF8' \
 
- && fakechroot fakeroot chroot $CHROOT_DIR \
-     /bin/sh -c 'gpg --export EBDD0362ACCC4CF8 > /var/tmp/EBDD0362ACCC4CF8 && apt-key add /var/tmp/EBDD0362ACCC4CF8 && rm /var/tmp/EBDD0362ACCC4CF8' \
+ # && fakechroot fakeroot chroot $CHROOT_DIR \
+ #     /bin/sh -c 'gpg --export EBDD0362ACCC4CF8 > /var/tmp/EBDD0362ACCC4CF8 && apt-key add /var/tmp/EBDD0362ACCC4CF8 && rm /var/tmp/EBDD0362ACCC4CF8' \
 
  # postgres key
  && fakechroot fakeroot chroot $CHROOT_DIR \
@@ -89,11 +89,17 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
      /bin/sh -c 'gpg --export ACCC4CF8 > /var/tmp/ACCC4CF8 && apt-key add /var/tmp/ACCC4CF8 && rm /var/tmp/ACCC4CF8' \
 
  # cran key
+ # && fakechroot fakeroot chroot $CHROOT_DIR \
+ #     gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9 \
+ 
  && fakechroot fakeroot chroot $CHROOT_DIR \
-     gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9 \
+     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
 
- && fakechroot fakeroot chroot $CHROOT_DIR \
-     /bin/sh -c 'gpg --export E084DAB9 > /var/tmp/E084DAB9 && apt-key add /var/tmp/E084DAB9 && rm /var/tmp/E084DAB9' \
+# && fakechroot fakeroot chroot $CHROOT_DIR \
+#     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9 \
+
+# && fakechroot fakeroot chroot $CHROOT_DIR \
+#     /bin/sh -c 'gpg --export E084DAB9 > /var/tmp/E084DAB9 && apt-key add /var/tmp/E084DAB9 && rm /var/tmp/E084DAB9' \
 
  && fakechroot fakeroot chroot $CHROOT_DIR \
      apt-get -q update \
