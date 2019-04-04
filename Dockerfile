@@ -24,7 +24,11 @@ RUN apt-get -q update \
       rsyslog \
       gnupg \
       gpg \
+      bsdtar \
       debootstrap
+
+# following on https://github.com/docker/hub-feedback/issues/727#issuecomment-299533372
+ENV tar="bsdtar"
 
 # "install" fakeroot (since it's not included in heroku-18 base at runtime anymore)
 # see https://devcenter.heroku.com/articles/stack-packages
