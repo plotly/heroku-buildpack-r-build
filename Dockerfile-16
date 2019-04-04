@@ -110,3 +110,7 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
 # install shiny (as it's the most used on Heroku)
 RUN fakechroot fakeroot chroot $CHROOT_DIR \
   /usr/bin/R -e "install.packages('shiny', repos='http://cran.rstudio.com/')"
+
+# install dash (as it's awesome)
+RUN fakechroot fakeroot chroot $CHROOT_DIR \
+  /usr/bin/R -e "remotes::install_github('plotly/dashR;)"
