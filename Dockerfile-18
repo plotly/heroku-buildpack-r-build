@@ -13,7 +13,9 @@ ENV PATH="$FAKECHROOT_DIR/sbin:$FAKECHROOT_DIR/bin:$PATH"
 
 # install prerequisites
 RUN apt-get -q update \
- && apt-get -qy install \
+ && apt-get -qy install rsyslog
+
+RUN apt-get -qy install \
       xz-utils \
       fakeroot \
       autogen \
