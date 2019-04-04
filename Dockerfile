@@ -13,6 +13,7 @@ ENV PATH="$FAKECHROOT_DIR/sbin:$FAKECHROOT_DIR/bin:$PATH"
 
 # install prerequisites
 RUN apt-get -q update \
+ && apt-get install ca-certificates \
  && apt-get -qy install \
       xz-utils \
       fakeroot \
@@ -69,6 +70,16 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
  # install gpg
  && fakechroot fakeroot chroot $CHROOT_DIR \
      apt-get -qy install gnupg gpg \
+
+ # libc key
+ && fakechroot fakeroot chroot $CHROOT_DIR \
+     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7FCC7D46ACCC4CF8 \   
+
+ && fakechroot fakeroot chroot $CHROOT_DIR \
+     /bin/sh -c 'gpg --export 7FCC7D46ACCC4CF8 > /var/tmp/7FCC7D46ACCC4CF8 && apt-key add /var/tmp/7FCC7D46ACCC4CF8 && rm /var/tmp/7FCC7D46ACCC4CF8' \
+
+ && fakechroot fakeroot chroot $CHROOT_DIR \
+     /bin/sh -c 'gpg --export EBDD0362ACCC4CF8 > /var/tmp/EBDD0362ACCC4CF8 && apt-key add /var/tmp/EBDD0362ACCC4CF8 && rm /var/tmp/EBDD0362ACCC4CF8' \
 
  # postgres key
  && fakechroot fakeroot chroot $CHROOT_DIR \
