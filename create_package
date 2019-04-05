@@ -62,7 +62,8 @@ pushd $APP_DIR > /dev/null
 topic 'Preparing directory'
 
 # NOTE: /var/tmp is mounted by docker
-tar xzf "/var/tmp/$PREARCHIVE"
+apt-get -qy install bsdtar
+bsdtar xzf "/var/tmp/$PREARCHIVE"
 
 # remove unneeded files to reduce slug size
 rm -rf $CHROOT_DIR/tmp/*.rds
@@ -97,7 +98,7 @@ symlink_files $CHROOT_DIR/usr /usr
 topic 'Packaging archive'
 
 # NOTE: /var/tmp is mounted by docker
-tar czf /var/tmp/R-$R_VERSION-binaries-$BUILD_NO.tar.gz .root .tools
+bsdtar czf /var/tmp/R-$R_VERSION-binaries-$BUILD_NO.tar.gz .root .tools
 
 popd > /dev/null
 exit 0
