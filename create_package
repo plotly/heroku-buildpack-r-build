@@ -62,6 +62,7 @@ pushd $APP_DIR > /dev/null
 topic 'Preparing directory'
 
 # NOTE: /var/tmp is mounted by docker
+apt-get -qy install bsdtar > /dev/null
 bsdtar xzf "/var/tmp/$PREARCHIVE"
 
 # remove unneeded files to reduce slug size
