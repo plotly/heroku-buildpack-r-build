@@ -100,7 +100,9 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
     libxt-dev \
     pkg-config \
     software-properties-common \
+    r-base-core=${R_VERSION}* \
     r-base-dev=${R_VERSION}* \
+    r-doc-html=${R_VERSION}* \
     r-recommended=${R_VERSION}*
 
 # install pandoc
