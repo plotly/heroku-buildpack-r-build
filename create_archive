@@ -23,7 +23,6 @@ pushd $APP_DIR > /dev/null
 topic 'Packaging binaries'
 
 # NOTE: /var/tmp is mounted by docker
-apt-get -qy install bsdtar
 bsdtar czf "/var/tmp/$ARCHIVE" .root .tools
 
 popd > /dev/null
