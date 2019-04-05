@@ -102,6 +102,10 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
     software-properties-common \
     r-base-core=${R_VERSION}* \
     r-base-dev=${R_VERSION}* \
+    r-cran-mgcv \
+    r-cran-rpart \
+    r-cran-survival \
+    r-cran-matrix=1.2-16* \
     r-doc-html=${R_VERSION}* \
     r-recommended=${R_VERSION}*
 
