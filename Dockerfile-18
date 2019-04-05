@@ -109,10 +109,14 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
 RUN fakechroot fakeroot chroot $CHROOT_DIR \
   /bin/sh -c 'curl -s -L https://github.com/jgm/pandoc/releases/download/1.19.2.1/pandoc-1.19.2.1-1-amd64.deb -o pandoc.deb && dpkg -i pandoc.deb && rm pandoc.deb'
 
+# install devtools and curl
+RUN fakechroot fakeroot chroot $CHROOT_DIR \
+  /usr/bin/R -e "install.packages(c('devtools','curl'))"
+
+# install older httpuv
+RUN fakechroot fakeroot chroot $CHROOT_DIR \
+  /usr/bin/R -e "devtools::install_version('httpuv', version='1.4.5.1')"
+
 # install shiny (as it's the most used on Heroku)
 RUN fakechroot fakeroot chroot $CHROOT_DIR \
   /usr/bin/R -e "install.packages('shiny', repos='http://cran.rstudio.com/')"
-
-# install dash (as it's awesome)
-RUN fakechroot fakeroot chroot $CHROOT_DIR \
-  /usr/bin/R -e "remotes::install_github('plotly/dashR;)"
