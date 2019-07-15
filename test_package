@@ -29,8 +29,8 @@ pushd $APP_DIR > /dev/null
 topic 'Preparing directory'
 
 # NOTE: /var/tmp is mounted by docker
-apt-get -qy install bsdtar > /dev/null
-bsdtar xzf "/var/tmp/$ARCHIVE"
+apt-get -qy install tar > /dev/null
+tar xzf "/var/tmp/$ARCHIVE"
 
 #======================================================================
 topic 'Testing'
