@@ -36,7 +36,7 @@ function topic() {
 STACK="heroku-16"
 BUILDPACK_ARCHIVE="R-$R_VERSION-binaries-$BUILD_NO.tar.gz"
 BUILDPACK_ARCHIVE_LATEST="R-$R_VERSION-binaries-latest.tar.gz"
-TAG="vsv/heroku-buildpack-r-v$R_VERSION-$STACK:$BUILD_NO"
+TAG="plotly/heroku-buildpack-r-v$R_VERSION-$STACK:$BUILD_NO"
 
 # for checking which version of the build script was used, output to STDOUT
 # so that it gets included in the build log output file
@@ -108,20 +108,20 @@ docker run -t \
   /var/tmp/test_package $R_VERSION $BUILD_NO $STACK
 
 #======================================================================
-topic 'Uploading archive'
+# topic 'Uploading archive'
 
 # upload to S3
-aws s3 cp $BUILDPACK_ARCHIVE \
-  "s3://heroku-buildpack-r/$STACK/$BUILDPACK_ARCHIVE" \
-  --acl=public-read \
-  --profile=heroku-buildpack-r \
-  --quiet
-
-echo
-echo "After testing the build, make it current by running the following:"
-echo
-echo " aws s3 cp s3://heroku-buildpack-r/$STACK/$BUILDPACK_ARCHIVE \\ "
-echo "   s3://heroku-buildpack-r/$STACK/$BUILDPACK_ARCHIVE_LATEST \\ "
-echo "   --acl=public-read \\ "
-echo "   --profile=heroku-buildpack-r "
-echo
+# aws s3 cp $BUILDPACK_ARCHIVE \
+#   "s3://heroku-buildpack-r/$STACK/$BUILDPACK_ARCHIVE" \
+#   --acl=public-read \
+#   --profile=heroku-buildpack-r \
+#   --quiet
+#
+# echo
+# echo "After testing the build, make it current by running the following:"
+# echo
+# echo " aws s3 cp s3://heroku-buildpack-r/$STACK/$BUILDPACK_ARCHIVE \\ "
+# echo "   s3://heroku-buildpack-r/$STACK/$BUILDPACK_ARCHIVE_LATEST \\ "
+# echo "   --acl=public-read \\ "
+# echo "   --profile=heroku-buildpack-r "
+# echo
