@@ -23,8 +23,7 @@ RUN apt-get -qy install \
       autoconf \
       libtool \
       debootstrap \
-      systemd \
-      ccache
+      systemd 
 
 # "install" fakeroot (since it's not included in heroku-16 base at runtime anymore)
 # see https://devcenter.heroku.com/articles/stack-packages
@@ -100,7 +99,6 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
   apt-get -qy install \
     build-essential \
     curl \
-    ccache \
     libssl1.1 \
     gfortran \
     libcairo2-dev \
