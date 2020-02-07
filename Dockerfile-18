@@ -122,7 +122,12 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
 
 # set default CRAN mirror and set working directory
 RUN fakechroot fakeroot chroot $CHROOT_DIR \
-   /bin/sh -c "echo 'options(repos = c(CRAN = '\''https://cloud.r-project.org/'\''), download.file.method = '\''libcurl'\'', Ncpus = parallel::detectCores(logical=FALSE)); if (dir.exists('\''/app'\'')) setwd('\''/app'\'')' >> /etc/R/Rprofile.site"
+   /bin/sh -c "echo 'options(repos = c(CRAN = '\''https://cloud.r-project.org/'\''), download.file.method = '\''libcurl'\'', Ncpus = parallel::detectCores(logical=FALSE)); if (dir.exists('\''app'\'')) setwd('\''app'\'')' >> /etc/R/Rprofile.site"
+
+# Different method to set working directory
+RUN fakechroot fakeroot chroot $CHROOT_DIR \
+   /bin/sh -c "echo 'if (dir.exists('\''app'\'')) setwd('\''app'\'')' | cat - /etc/R/Rprofile.site > temp && mv temp /etc/R/Rprofile.site"
+
 
 # install dash 
 RUN fakechroot fakeroot chroot $CHROOT_DIR \
