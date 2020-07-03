@@ -120,7 +120,9 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
     libgsl0-dev \
     libssl-dev \
     libxml2-dev \
+    libv8-3.14-dev \
     libxt-dev \
+    pigz \
     pkg-config \
     libcurl4-gnutls-dev \
     libgit2-dev \
@@ -136,6 +138,11 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
 # install pandoc
 RUN fakechroot fakeroot chroot $CHROOT_DIR \
   /bin/sh -c 'curl -s -L https://github.com/jgm/pandoc/releases/download/1.19.2.1/pandoc-1.19.2.1-1-amd64.deb -o pandoc.deb && dpkg -i pandoc.deb && rm pandoc.deb'
+
+# set default CRAN mirror
+RUN fakechroot fakeroot chroot $CHROOT_DIR \
+   /bin/sh -c "echo 'options(repos = c(CRAN = '\''https://cloud.r-project.org/'\''), download.file.method = '\''libcurl'\'', Ncpus = parallel::detectCores(logical=FALSE)); if (Sys.getenv('\''PORT'\'') == '\'''\'') {Sys.setenv(PORT='\''5000'\'')}; if (Sys.getenv('\''HOST'\'') == '\'''\'') {Sys.setenv(HOST='\''0.0.0.0'\'')}; oldNormalizePath <- base::normalizePath; newnormalizePath <- function(path, winslash='\''\\\\\\\'\'', mustWork=NA){return(oldNormalizePath(path, winslash, mustWork=FALSE))}; utils::assignInNamespace(x='\''normalizePath'\'', value=newnormalizePath, ns='\''base'\'')' >> /etc/R/Rprofile.site"
+
 
 # install dash 
 RUN fakechroot fakeroot chroot $CHROOT_DIR \
