@@ -55,16 +55,31 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
      /bin/sh -c 'echo "deb http://archive.ubuntu.com/ubuntu bionic main universe" > /etc/apt/sources.list' \
 
  && fakechroot fakeroot chroot $CHROOT_DIR \
+     /bin/sh -c 'echo "deb-src http://archive.ubuntu.com/ubuntu bionic main universe" >> /etc/apt/sources.list' \
+
+ && fakechroot fakeroot chroot $CHROOT_DIR \
      /bin/sh -c 'echo "deb http://archive.ubuntu.com/ubuntu bionic-security main universe" >> /etc/apt/sources.list' \
+
+ && fakechroot fakeroot chroot $CHROOT_DIR \
+     /bin/sh -c 'echo "deb-src http://archive.ubuntu.com/ubuntu bionic-security main universe" >> /etc/apt/sources.list' \
 
  && fakechroot fakeroot chroot $CHROOT_DIR \
      /bin/sh -c 'echo "deb http://archive.ubuntu.com/ubuntu bionic-updates main universe" >> /etc/apt/sources.list' \
 
  && fakechroot fakeroot chroot $CHROOT_DIR \
+     /bin/sh -c 'echo "deb-src http://archive.ubuntu.com/ubuntu bionic-updates main universe" >> /etc/apt/sources.list' \ 
+
+ && fakechroot fakeroot chroot $CHROOT_DIR \
      /bin/sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" >> /etc/apt/sources.list' \
 
  && fakechroot fakeroot chroot $CHROOT_DIR \
+     /bin/sh -c 'echo "deb-src http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" >> /etc/apt/sources.list' \ 
+
+ && fakechroot fakeroot chroot $CHROOT_DIR \
      /bin/sh -c 'echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" >> /etc/apt/sources.list' \
+
+ && fakechroot fakeroot chroot $CHROOT_DIR \
+     /bin/sh -c 'echo "deb-src https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" >> /etc/apt/sources.list' \
 
  # install gpg
  && fakechroot fakeroot chroot $CHROOT_DIR \
@@ -109,7 +124,11 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
     pkg-config \
     libcurl4-gnutls-dev \
     libgit2-dev \
-    software-properties-common \
+    software-properties-common
+
+# install dependencies and R
+RUN fakechroot fakeroot chroot $CHROOT_DIR \
+  apt-get -qy install \
     r-base-core=${R_VERSION}* \
     r-base-dev=${R_VERSION}* \
     r-recommended=${R_VERSION}*
@@ -120,7 +139,7 @@ RUN fakechroot fakeroot chroot $CHROOT_DIR \
 
 # install dash 
 RUN fakechroot fakeroot chroot $CHROOT_DIR \
-  /usr/bin/R -e "r <- getOption('repos'); r['CRAN'] <- 'http://cloud.r-project.org'; options(repos=r, Ncpus=2); install.packages(c('devtools', 'callr', 'data.table', 'plotly', 'ggplot2', 'scales', 'httr', 'jsonlite',  'magrittr', 'digest', 'viridisLite', 'base64enc', 'htmltools', 'htmlwidgets', 'tidyr', 'hexbin', 'RColorBrewer', 'dplyr', 'tibble', 'lazyeval', 'rlang', 'crosstalk', 'purrr', 'promises', 'R6', 'shiny', 'assertthat', 'glue', 'pkgconfig', 'Rcpp', 'tidyselect', 'BH', 'plogr', 'gtable', 'MASS', 'mgcv', 'reshape2', 'withr', 'lattice', 'yaml', 'curl', 'mime', 'openssl', 'later', 'labeling', 'munsell', 'cli', 'crayon', 'fansi', 'pillar', 'ellipsis', 'stringi', 'vctrs', 'lifecycle', 'nlme', 'Matrix', 'colorspace', 'askpass', 'utf8', 'plyr', 'stringr', 'httpuv', 'xtable', 'sourcetools', 'backports', 'zeallot', 'sys', 'fiery', 'uuid', 'future', 'reqres', 'globals', 'listenv', 'urltools', 'brotli', 'xml2', 'webutils', 'codetools', 'triebeard'))
+  /usr/bin/R -e "r <- getOption('repos'); r['CRAN'] <- 'http://cloud.r-project.org'; options(repos=r, Ncpus=2); install.packages(c('devtools', 'callr', 'data.table', 'plotly', 'ggplot2', 'scales', 'httr', 'jsonlite',  'magrittr', 'digest', 'viridisLite', 'base64enc', 'htmltools', 'htmlwidgets', 'tidyr', 'hexbin', 'RColorBrewer', 'dplyr', 'tibble', 'lazyeval', 'rlang', 'crosstalk', 'purrr', 'promises', 'R6', 'shiny', 'assertthat', 'glue', 'pkgconfig', 'Rcpp', 'tidyselect', 'BH', 'plogr', 'gtable', 'MASS', 'mgcv', 'reshape2', 'withr', 'lattice', 'yaml', 'curl', 'mime', 'openssl', 'later', 'labeling', 'munsell', 'cli', 'crayon', 'fansi', 'pillar', 'ellipsis', 'stringi', 'vctrs', 'lifecycle', 'nlme', 'Matrix', 'colorspace', 'askpass', 'utf8', 'plyr', 'stringr', 'httpuv', 'xtable', 'sourcetools', 'backports', 'zeallot', 'sys', 'fiery', 'uuid', 'future', 'reqres', 'globals', 'listenv', 'urltools', 'brotli', 'xml2', 'webutils', 'codetools', 'triebeard'))"
 
 RUN fakechroot fakeroot chroot $CHROOT_DIR \
   nm -a /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1
