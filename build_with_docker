@@ -14,7 +14,7 @@ set -e
 
 R_VERSION="$1"
 BUILD_NO="${2:-`date +%Y%m%d-%H%M`}"
-STACK="${3:-heroku-16}"
+STACK="${3:-heroku-18}"
 IMAGE="heroku/$(echo "$STACK" | cut -d'-' -f1):$(echo "$STACK" | cut -d'-' -f2)"
 DOCKERFILE="Dockerfile-$(echo "$STACK" | cut -d'-' -f2)"
 
